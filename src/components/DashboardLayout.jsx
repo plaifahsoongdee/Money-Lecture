@@ -82,12 +82,12 @@ function DashboardLayout() {
       </div>
       <div style={{ flex: 1, padding: "2rem", marginLeft: "260px" }}>
         <Header />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem", marginTop: "1rem" }}>
-          <OverviewCard title="รายรับ" value={`฿${calculateTotal("รายรับ")}`} entries={entries["รายรับ"]} onClick={() => setSelectedTab("รายรับ")} />
-          <OverviewCard title="รายจ่าย" value={`฿${calculateTotal("รายจ่าย")}`} entries={entries["รายจ่าย"]} onClick={() => setSelectedTab("รายจ่าย")} />
-          <OverviewCard title="ยอดคงเหลือ" value={`฿${balance}`} entries={[]} />
-          <OverviewCard title="ยอดเงินเก็บ" value={`฿${calculateTotal("ยอดเงินเก็บ")}`} entries={entries["ยอดเงินเก็บ"]} onClick={() => setSelectedTab("ยอดเงินเก็บ")} />
-        </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem", marginTop: "1rem" }}>
+            <OverviewCard title="รายรับ" value={`฿${calculateTotal("รายรับ")}`} entries={entries["รายรับ"]} onClick={() => setSelectedTab("รายรับ")} />
+            <OverviewCard title="รายจ่าย" value={`฿${calculateTotal("รายจ่าย")}`} entries={entries["รายจ่าย"]} onClick={() => setSelectedTab("รายจ่าย")} />
+            <OverviewCard title="ยอดคงเหลือ" value={`฿${balance}`} entries={[]} />
+            <OverviewCard title="ยอดเงินเก็บ" value={`฿${calculateTotal("ยอดเงินเก็บ")}`} entries={entries["ยอดเงินเก็บ"]} onClick={() => setSelectedTab("ยอดเงินเก็บ")} />
+          </div>
 
         {/* แถวใหม่ที่ประกอบด้วย LatestEntries และ CustomCalendar */}
         <Row className="mt-4">

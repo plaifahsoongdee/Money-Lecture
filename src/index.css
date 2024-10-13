@@ -136,3 +136,14 @@ button:focus-visible {
 .expense {
   color: red;
 }
+
+.legend span {
+  font-size: 0.9em;
+  color: #888;
+}
+
+.filter-buttons button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}

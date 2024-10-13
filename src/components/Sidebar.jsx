@@ -23,7 +23,7 @@ function Sidebar({ onSelectTab }) {
       </div>
       
       <Link
-        to="/home"
+        to="/"
         onClick={() => handleTabClick("#home")}
         className={`list-group-item list-group-item-action ${activeTab === "#home" ? "active" : ""}`}
         style={{
@@ -51,7 +51,7 @@ function Sidebar({ onSelectTab }) {
           color: activeTab === "#overview" ? '#FFF' : '#FF69B4',
           backgroundColor: activeTab === "#overview" ? '#FF69B4' : 'transparent',
           textAlign: 'center',
-          marginBottom: '0.2rem',
+          marginBottom: '0.2rem',   
           textDecoration: 'none'
         }}
       >
