@@ -43,7 +43,7 @@ function Login() {
                     <button type="submit" style={{
                         width: '100%',
                         padding: '10px',
-                        backgroundColor: '#4CAF50',
+                        backgroundColor: '#FF69B4',
                         color: 'white',
                         border: 'none',
                         borderRadius: '5px',
@@ -56,7 +56,7 @@ function Login() {
                 
                 <div style={{ textAlign: 'center', marginTop: '20px' }}>
                     <span>ยังไม่มีบัญชีใช่ไหม?</span>
-                    <Link to="/register" style={{ color: '#4CAF50', textDecoration: 'none', marginLeft: '5px' }}>สมัครสมาชิก</Link>
+                    <Link to="/register" style={{ color: '#FF69B4', textDecoration: 'none', marginLeft: '5px' }}>สมัครสมาชิก</Link>
                 </div>
             </div>
         </div>

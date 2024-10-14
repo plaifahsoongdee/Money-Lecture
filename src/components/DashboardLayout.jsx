@@ -4,7 +4,8 @@ import Header from './Header';
 import OverviewCard from './OverviewCard';
 import LatestEntries from './LatestEntries';
 import CustomCalendar from './CustomCalendar';
-import { Row, Col, Modal, Button, Form, Alert, Container } from 'react-bootstrap';
+import { Row, Col, Modal, Button, Form, Alert } from 'react-bootstrap';
+import { Outlet } from 'react-router-dom';
 
 function DashboardLayout() {
   const [selectedTab, setSelectedTab] = useState("รายรับ");
@@ -53,6 +54,56 @@ function DashboardLayout() {
     setShowModal(false);
   };
 
+  const handleEditEntry = (entry) => {
+    setIsEditMode(true);
+    setCurrentEntry(entry);
+    setSource(entry.source);
+    setAmount(Math.abs(entry.amount)); // Remove the sign for editing
+    setDate(entry.date);
+    setTime(entry.time);
+    setShowModal(true);
+  };
+
+  const handleUpdateEntry = () => {
+    if (!amount) {
+      setError("กรุณากรอกจำนวนเงิน");
+      return;
+    }
+
+    const entryAmount = parseFloat(amount);
+    const updatedEntry = {
+      ...currentEntry,
+      source,
+      amount: selectedTab === "รายจ่าย" || selectedTab === "ยอดเงินเก็บ" ? -entryAmount : entryAmount,
+      date,
+      time,
+      type: selectedTab,
+    };
+
+    setEntries((prevEntries) => {
+      const updatedList = { ...prevEntries };
+      const entryType = currentEntry.type;
+
+      // Replace the current entry with the updated one
+      updatedList[entryType] = updatedList[entryType].map((entry) =>
+        entry === currentEntry ? updatedEntry : entry
+      );
+      return updatedList;
+    });
+
+    handleCancel();
+    setShowModal(false);
+  };
+
+  const handleDeleteEntry = (entryToDelete) => {
+    const entryType = entryToDelete.type;
+    
+    setEntries((prevEntries) => ({
+      ...prevEntries,
+      [entryType]: prevEntries[entryType].filter(entry => entry !== entryToDelete),
+    }));
+  };
+
   const handleCancel = () => {
     setSource("");
     setAmount("");
@@ -82,17 +133,18 @@ function DashboardLayout() {
       </div>
       <div style={{ flex: 1, padding: "2rem", marginLeft: "260px" }}>
         <Header />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem", marginTop: "1rem" }}>
-            <OverviewCard title="รายรับ" value={`฿${calculateTotal("รายรับ")}`} entries={entries["รายรับ"]} onClick={() => setSelectedTab("รายรับ")} />
-            <OverviewCard title="รายจ่าย" value={`฿${calculateTotal("รายจ่าย")}`} entries={entries["รายจ่าย"]} onClick={() => setSelectedTab("รายจ่าย")} />
-            <OverviewCard title="ยอดคงเหลือ" value={`฿${balance}`} entries={[]} />
-            <OverviewCard title="ยอดเงินเก็บ" value={`฿${calculateTotal("ยอดเงินเก็บ")}`} entries={entries["ยอดเงินเก็บ"]} onClick={() => setSelectedTab("ยอดเงินเก็บ")} />
-          </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "1.5rem", marginTop: "1rem" }}>
+          <OverviewCard title="รายรับ" value={`฿${calculateTotal("รายรับ")}`} entries={entries["รายรับ"]} onClick={() => setSelectedTab("รายรับ")} />
+          <OverviewCard title="รายจ่าย" value={`฿${Math.abs(calculateTotal("รายจ่าย"))}`} entries={entries["รายจ่าย"]} onClick={() => setSelectedTab("รายจ่าย")} />
+          <OverviewCard title="ยอดเงินเก็บ" value={`฿${Math.abs(calculateTotal("ยอดเงินเก็บ"))}`} entries={entries["ยอดเงินเก็บ"]} onClick={() => setSelectedTab("ยอดเงินเก็บ")} />
+          <OverviewCard title="ยอดคงเหลือ" value={`฿${Math.abs(balance)}`} entries={[]} />
+          <OverviewCard title="ยอดเงินรวม" value={`฿${Math.abs(calculateTotal("ยอดเงินเก็บ") + balance)}`} entries={[]} />
 
-        {/* แถวใหม่ที่ประกอบด้วย LatestEntries และ CustomCalendar */}
+        </div>
+
         <Row className="mt-4">
           <Col md={6}>
-            <LatestEntries entries={combinedEntries} title="รายการรายรับ-รายจ่าย-ยอดเงินเก็บล่าสุด" />
+            <LatestEntries entries={combinedEntries} title="รายการรายรับ-รายจ่าย-ยอดเงินเก็บล่าสุด" onEditEntry={handleEditEntry} onDeleteEntry={handleDeleteEntry} />
           </Col>
           <Col md={6}>
             <div style={{ padding: "20px", backgroundColor: "#ffffff", borderRadius: "8px", boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)" }}>
@@ -178,11 +230,16 @@ function DashboardLayout() {
             <Button variant="secondary" onClick={handleCancel}>
               ยกเลิก
             </Button>
-            <Button variant="primary" onClick={isEditMode ? handleUpdateEntry : handleAddEntry}>
+            <Button 
+              style={{ backgroundColor: '#FF69B4', borderColor: '#FF69B4', color: '#FFFFFF' }}
+              onClick={isEditMode ? handleUpdateEntry : handleAddEntry}
+            >
               {isEditMode ? "บันทึกการเปลี่ยนแปลง" : "บันทึก"}
             </Button>
           </Modal.Footer>
         </Modal>
+        
+        <Outlet /> {/* เพื่อแสดงเนื้อหาของเส้นทางย่อย */}
       </div>
     </div>
   );

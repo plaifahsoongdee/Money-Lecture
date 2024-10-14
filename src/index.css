@@ -68,7 +68,7 @@ button:focus-visible {
 
 /* กำหนดสไตล์สำหรับแท็บปกติ */
 .list-group-item {
-  background-color: rgb(255, 182, 193); /* สีพื้นหลังปกติ */
+  background-color: rgb(211, 83, 102); /* สีพื้นหลังปกติ */
   color: rgb(255, 105, 180); /* สีข้อความปกติ */
   transition: background-color 0.3s ease;
 }

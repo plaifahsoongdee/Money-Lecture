@@ -11,9 +11,8 @@ const Account = () => {
   const [error, setError] = useState('');
 
   // State สำหรับข้อมูลส่วนตัว
-  const [firstName, setFirstName] = useState('X');
-  const [lastName, setLastName] = useState('AE_A');
-  const [email, setEmail] = useState('elementary221b@gmail.com');
+  const [firstName, setFirstName] = useState('Mongyungbin');
+  const [email, setEmail] = useState('Mongyung@gmail.com');
   const [phone, setPhone] = useState('012-345-6789');
 
   const handleUpdatePassword = () => {
@@ -24,7 +23,7 @@ const Account = () => {
     } else {
       alert('รหัสผ่านถูกอัปเดตเรียบร้อย');
       setError('');
-    }
+    }   
   };
 
   const handleUpdateProfile = () => {
@@ -51,7 +50,7 @@ const Account = () => {
                 alt="Profile" 
                 className="profile-image"
               />
-              <h2>{firstName} {lastName}</h2>
+              <h2>{firstName}</h2> {/* ลบ lastName ออก */}
               <Button variant="danger" onClick={handleLogout} className="mt-3">
                 ออกจากระบบ
               </Button>
@@ -63,22 +62,12 @@ const Account = () => {
                     <h3>ข้อมูลโปรไฟล์</h3>
                     <Form>
                       <Form.Group controlId="firstName">
-                        <Form.Label>ชื่อ</Form.Label>
+                        <Form.Label>User</Form.Label>
                         <Form.Control
                           type="text"
                           value={firstName}
                           onChange={(e) => setFirstName(e.target.value)}
                           placeholder="กรุณากรอกชื่อ"
-                        />
-                      </Form.Group>
-
-                      <Form.Group controlId="lastName" className="mt-3">
-                        <Form.Label>นามสกุล</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                          placeholder="กรุณากรอกนามสกุล"
                         />
                       </Form.Group>
 

@@ -48,7 +48,7 @@ function Register() {
                     <button type="submit" style={{
                         width: '100%',
                         padding: '10px',
-                        backgroundColor: '#4CAF50',
+                        backgroundColor: '#FF69B4',
                         color: 'white',
                         border: 'none',
                         borderRadius: '5px',
@@ -61,7 +61,7 @@ function Register() {
                 
                 <div style={{ textAlign: 'center', marginTop: '20px' }}>
                     <span>มีบัญชีอยู่แล้วใช่ไหม? </span>
-                    <Link to="/login" style={{ color: '#4CAF50', textDecoration: 'none', marginLeft: '5px' }}>เข้าสู่ระบบ</Link>
+                    <Link to="/login" style={{ color: '#FF69B4', textDecoration: 'none', marginLeft: '5px' }}>เข้าสู่ระบบ</Link>
                 </div>
             </div>
         </div>
@@ -69,4 +69,3 @@ function Register() {
 }
 
 export default Register;
-    

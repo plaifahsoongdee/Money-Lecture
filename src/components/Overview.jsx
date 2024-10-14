@@ -75,7 +75,7 @@ function Overview() {
               borderRadius: '10px',
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               border: '1px solid #ddd',
-              flexBasis: '47%',
+              flexBasis: '48%',
               marginRight: '0px'
             }}>
               <div className="d-flex justify-content-between align-items-center mb-3">
@@ -124,7 +124,7 @@ function Overview() {
               borderRadius: '10px', 
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               border: '1px solid #ddd',
-              flexBasis: '44%'
+              flexBasis: '45%'
             }}>
               <div className="d-flex justify-content-between align-items-center mb-3">
                 <h4>สรุปยอดเงิน</h4>
@@ -198,7 +198,7 @@ function Overview() {
 
             {/* สรุปรายรับ-รายจ่าย ใช้ข้อมูลจาก orderData */}
             <Col md={5} style={{
-              padding: '20px', 
+              padding: '25px', 
               backgroundColor: '#f4f6f8', 
               borderRadius: '10px', 
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',

@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 function Sidebar({ onSelectTab }) {
-  const [activeTab, setActiveTab] = useState("#home");
+  const location = useLocation(); // ใช้ useLocation เพื่อติดตามเส้นทางปัจจุบัน
+  const [activeTab, setActiveTab] = useState(location.pathname); // กำหนด activeTab ตามเส้นทางปัจจุบัน
+
+  useEffect(() => {
+    setActiveTab(location.pathname); // อัปเดต activeTab เมื่อเส้นทางเปลี่ยน
+  }, [location]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    if (onSelectTab) onSelectTab(tab); // ตรวจสอบว่ามี onSelectTab หรือไม่
+    if (onSelectTab) onSelectTab(tab);
   };
 
   return (
@@ -23,18 +28,18 @@ function Sidebar({ onSelectTab }) {
       </div>
       
       <Link
-        to="/"
-        onClick={() => handleTabClick("#home")}
-        className={`list-group-item list-group-item-action ${activeTab === "#home" ? "active" : ""}`}
+        to="/dashboard"
+        onClick={() => handleTabClick("/dashboard")}
+        className={`list-group-item list-group-item-action ${activeTab === "/dashboard" ? "active" : ""}`}
         style={{
           border: '2px solid #FF69B4', 
           padding: '10px',
           borderRadius: '10px',
-          color: activeTab === "#home" ? '#FFF' : '#FF69B4',
-          backgroundColor: activeTab === "#home" ? '#FF69B4' : 'transparent',
+          color: activeTab === "/dashboard" ? '#FFF' : '#FF69B4',
+          backgroundColor: activeTab === "/dashboard" ? '#FF69B4' : 'transparent',
           textAlign: 'center',
           marginBottom: '0.2rem',
-          textDecoration: 'none' // เอาเส้นใต้ลิงก์ออก
+          textDecoration: 'none'
         }}
       >
         Home
@@ -42,14 +47,14 @@ function Sidebar({ onSelectTab }) {
       
       <Link
         to="/overview"
-        onClick={() => handleTabClick("#overview")}
-        className={`list-group-item list-group-item-action ${activeTab === "#overview" ? "active" : ""}`}
+        onClick={() => handleTabClick("/overview")}
+        className={`list-group-item list-group-item-action ${activeTab === "/overview" ? "active" : ""}`}
         style={{
           border: '2px solid #FF69B4',
           padding: '10px',
           borderRadius: '10px',
-          color: activeTab === "#overview" ? '#FFF' : '#FF69B4',
-          backgroundColor: activeTab === "#overview" ? '#FF69B4' : 'transparent',
+          color: activeTab === "/overview" ? '#FFF' : '#FF69B4',
+          backgroundColor: activeTab === "/overview" ? '#FF69B4' : 'transparent',
           textAlign: 'center',
           marginBottom: '0.2rem',   
           textDecoration: 'none'
@@ -60,14 +65,14 @@ function Sidebar({ onSelectTab }) {
       
       <Link
         to="/account"
-        onClick={() => handleTabClick("#account")}
-        className={`list-group-item list-group-item-action ${activeTab === "#account" ? "active" : ""}`}
+        onClick={() => handleTabClick("/account")}
+        className={`list-group-item list-group-item-action ${activeTab === "/account" ? "active" : ""}`}
         style={{
           border: '2px solid #FF69B4',
           padding: '10px',
           borderRadius: '10px',
-          color: activeTab === "#account" ? '#FFF' : '#FF69B4',
-          backgroundColor: activeTab === "#account" ? '#FF69B4' : 'transparent',
+          color: activeTab === "/account" ? '#FFF' : '#FF69B4',
+          backgroundColor: activeTab === "/account" ? '#FF69B4' : 'transparent',
           textAlign: 'center',
           marginBottom: '0.5rem',
           textDecoration: 'none'
