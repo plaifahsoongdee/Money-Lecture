@@ -12,12 +12,14 @@ function LatestEntries({ entries, title, onEditEntry }) {
         borderRadius: '10px',
       }}
     >
-      <Card.Header style={{ backgroundColor: '#E0F7FA', fontWeight: 'bold' }}>{title}</Card.Header>
+      <Card.Header style={{ backgroundColor: '#E0F7FA', fontWeight: 'bold' }}>
+        {title}
+      </Card.Header>
       <Card.Body>
         {latestEntries.length > 0 ? (
-          latestEntries.map((entry, index) => (
+          latestEntries.map(({ id, source = "ไม่ระบุ", type, amount, date, time }, index) => (
             <div 
-              key={index} 
+              key={id || index} // ใช้ id หากมี มิฉะนั้นจะใช้ index
               style={{ 
                 marginBottom: '0.5rem', 
                 paddingBottom: '0.5rem', 
@@ -25,24 +27,30 @@ function LatestEntries({ entries, title, onEditEntry }) {
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span>{entry.source || "ไม่ระบุ"}</span>
-                <span 
-                  style={{ 
-                    color: entry.type === "รายจ่าย" ? 'red' : entry.type === "รายรับ" ? 'green' : 'orange'
-                  }}
-                >
-                  ฿{Math.abs(entry.amount).toLocaleString()} {/* ใช้ Math.abs() เพื่อลบเครื่องหมายลบออก */}
+                <span>{source}</span>
+                <span style={{ 
+                  color: type === "รายจ่าย" ? 'red' : type === "รายรับ" ? 'green' : 'orange' 
+                }}>
+                  ฿{Math.abs(amount).toLocaleString()}
                 </span>
               </div>
               <div style={{ fontSize: '0.8rem', color: 'gray', display: 'flex', justifyContent: 'space-between' }}>
                 <div>
-                  <span>{entry.date ? entry.date.replace(/-/g, "/") : "ไม่ระบุ"}</span>
-                  <span> - {entry.time || "ไม่ระบุ"}</span>
+                  <span>
+                    {date 
+                      ? new Date(date).toLocaleDateString('th-TH', {
+                          day: '2-digit', 
+                          month: '2-digit', 
+                          year: 'numeric'
+                        }) 
+                      : "ไม่ระบุ"}
+                  </span>
+                  <span> - {time || "ไม่ระบุ"}</span>
                 </div>
-                <Button 
-                  variant="link" 
-                  size="sm" 
-                  onClick={() => onEditEntry(entry)} 
+                <Button
+                  variant="link"
+                  size="sm"
+                  onClick={() => onEditEntry({ id, source, type, amount, date, time })} // เรียกใช้ฟังก์ชันแก้ไขทันที
                   style={{ fontSize: '0.8rem', color: '#007bff', textDecoration: 'underline' }}
                 >
                   แก้ไข

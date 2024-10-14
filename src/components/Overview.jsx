@@ -15,6 +15,13 @@ function Overview() {
   const [selectedTypeOrders, setSelectedTypeOrders] = useState("รวม");
   const [productData, setProductData] = useState([]);
   const [orderData, setOrderData] = useState([]);
+  const [viewOptionBar, setViewOptionBar] = useState("summary");
+  const [viewOptionPie, setViewOptionPie] = useState("summary");
+  
+  // State สำหรับค่ารวม
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+  const [totalSaving, setTotalSaving] = useState(0);
 
   const handleDateChangeProducts = (filter) => {
     setSelectedDateProducts(filter.date);
@@ -32,6 +39,24 @@ function Overview() {
     setSelectedTypeOrders(type);
   };
 
+  const updateOrderData = (data) => {
+    setOrderData(data);
+    // คำนวณค่ารวมจาก orderData
+    const income = data.find(d => d.type === "รายรับ")?.amount || 0;
+    const expense = data.find(d => d.type === "รายจ่าย")?.amount || 0;
+    const saving = data.find(d => d.type === "เงินเก็บ")?.amount || 0;
+    setTotalIncome(income);
+    setTotalExpense(expense);
+    setTotalSaving(saving);
+  };
+
+  // สร้างข้อมูลสำหรับกราฟแท่ง โดยใช้ orderData และเพิ่มคีย์ "name" สำหรับแสดงเดือนหรือประเภท
+  const barChartData = [
+    { name: 'รายรับ', sales: totalIncome },
+    { name: 'รายจ่าย', sales: Math.abs(totalExpense) },
+    { name: 'เงินเก็บ', sales: totalSaving }
+  ];
+
   return (
     <div style={{ display: "flex", width: "100vw", minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
       <div style={{
@@ -45,9 +70,9 @@ function Overview() {
         <Container style={{ padding: '2rem', maxWidth: '1200px', margin: 'auto' }}>
           <Row className="mb-4" style={{ gap: '20px' }}>
             <Col md={5} style={{
-              padding: '20px', 
-              backgroundColor: '#f4f6f8', 
-              borderRadius: '10px', 
+              padding: '20px',
+              backgroundColor: '#f4f6f8',
+              borderRadius: '10px',
               boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
               border: '1px solid #ddd',
               flexBasis: '47%',
@@ -137,41 +162,67 @@ function Overview() {
               <LatestOrders 
                 selectedDate={selectedDateOrders} 
                 selectedType={selectedTypeOrders} 
-                onOrdersUpdate={setOrderData}
+                onOrdersUpdate={updateOrderData} 
               />
             </Col>
           </Row>
 
-          <Row className="mt-4">
           <Row className="mt-4" style={{ gap: '20px' }}>
-  {/* แผนภาพรายวัน */}
-  <Col md={5} style={{
-    padding: '20px', 
-    backgroundColor: '#f4f6f8', 
-    borderRadius: '10px', 
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    border: '1px solid #ddd',
-    flexBasis: '48%',
-   
-  }}>
-    <h4>แผนภาพรายวัน</h4>
-    <SalesBarChart />
-  </Col>
+            {/* แผนภาพรายวัน ใช้ข้อมูลจาก barChartData */}
+            <Col md={5} style={{
+              padding: '20px', 
+              backgroundColor: '#f4f6f8', 
+              borderRadius: '10px', 
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              border: '1px solid #ddd',
+              flexBasis: '48%'
+            }}>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h4>แผนภาพรายวัน</h4>
+                <ButtonGroup size="sm" className="me-2">
+                  <Button variant={viewOptionBar === "summary" ? "primary" : "outline-primary"} onClick={() => setViewOptionBar("summary")}>
+                    รายการทั้งหมด
+                  </Button>
+                  <Button variant={viewOptionBar === "all" ? "primary" : "outline-primary"} onClick={() => setViewOptionBar("all")}>
+                    สรุปยอด
+                  </Button>
+                </ButtonGroup>
+              </div>
+              <hr style={{ borderTop: '1px solid #ddd', backgroundColor: '#ffffff' }} />
+              {viewOptionBar === "summary" ? (
+                <SalesBarChart data={productData.map(item => ({ name: item.type, sales: Math.abs(item.amount) }))} />
+              ) : (
+                <SalesBarChart data={barChartData} />
+              )}
+            </Col>
 
-  {/* สรุปรายรับ-รายจ่าย */}
-  <Col md={5} style={{
-    padding: '20px', 
-    backgroundColor: '#f4f6f8', 
-    borderRadius: '10px', 
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    border: '1px solid #ddd',
-    flexBasis: '45%'  
-  }}>
-    <h4>สรุปรายรับ-รายจ่าย</h4>
-    <TrafficSourceChart data={productData} />
-  </Col>
-</Row>
-
+            {/* สรุปรายรับ-รายจ่าย ใช้ข้อมูลจาก orderData */}
+            <Col md={5} style={{
+              padding: '20px', 
+              backgroundColor: '#f4f6f8', 
+              borderRadius: '10px', 
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              border: '1px solid #ddd',
+              flexBasis: '45%'  
+            }}>
+              <div className="d-flex justify-content-between align-items-center mb-3">
+                <h4>สรุปรายรับ-รายจ่าย</h4>
+                <ButtonGroup size="sm" className="me-2">
+                  <Button variant={viewOptionPie === "summary" ? "primary" : "outline-primary"} onClick={() => setViewOptionPie("summary")}>
+                    รายการทั้งหมด
+                  </Button>
+                  <Button variant={viewOptionPie === "all" ? "primary" : "outline-primary"} onClick={() => setViewOptionPie("all")}>
+                    สรุปยอด
+                  </Button>
+                </ButtonGroup>
+              </div>
+              <hr style={{ borderTop: '1px solid #ddd', backgroundColor: '#ffffff' }} />
+              {viewOptionPie === "summary" ? (
+                <TrafficSourceChart data={productData} />
+              ) : (
+                <TrafficSourceChart data={orderData} />
+              )}
+            </Col>
           </Row>
         </Container>
       </div>
@@ -180,4 +231,3 @@ function Overview() {
 }
 
 export default Overview;
- 

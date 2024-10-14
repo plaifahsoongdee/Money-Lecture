@@ -1,27 +1,13 @@
 import React from 'react';
 
-function LatestOrders({ selectedDate, selectedType }) {
+function LatestOrders({ selectedDate, selectedType, onOrdersUpdate }) {
     const products = [
         { date: "2024-10-15", time: "6:00", status: "แม่ให้", type: "รายรับ", amount: 50 },
         { date: "2024-10-15", time: "6:30", status: "พ่อให้", type: "รายรับ", amount: 50 },
-        { date: "2024-10-15", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -30 },
+        { date: "2024-10-17", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -30 },
         { date: "2024-10-15", time: "9:00", status: "ซื้อขนม", type: "รายจ่าย", amount: -20 },
         { date: "2024-10-15", time: "10:00", status: "ออมเงินซื้อของเล่น", type: "เงินเก็บ", amount: 20 },
-
-        { date: "2024-10-17", time: "6:00", status: "แม่ให้", type: "รายรับ", amount: 50 },
-        { date: "2024-10-17", time: "6:30", status: "พ่อให้", type: "รายรับ", amount: 50 },
-        { date: "2024-10-17", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -1000 },
-        { date: "2024-10-17", time: "9:00", status: "ซื้อขนม", type: "รายจ่าย", amount: -1000 },
-        { date: "2024-10-17", time: "10:00", status: "ออมเงินซื้อของเล่น", type: "เงินเก็บ", amount: 500 },
-
-        { date: "2024-10-18", time: "6:00", status: "แม่ให้", type: "รายรับ", amount: 50 },
-        { date: "2024-10-18", time: "6:30", status: "พ่อให้", type: "รายรับ", amount: 50 },
-        { date: "2024-10-18", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -1000 },
-        { date: "2024-10-18", time: "9:00", status: "ซื้อขนม", type: "รายจ่าย", amount: -1000 },
-        { date: "2024-10-18", time: "10:00", status: "ออมเงินซื้อของเล่น", type: "เงินเก็บ", amount: 500 },
-
-        { date: "2024-09-1", time: "14:00", status: "Delivered", type: "รายจ่าย", amount: -1000 },
-        { date: "2023-10-1", time: "14:00", status: "Refunded", type: "เงินเก็บ", amount: 500 },
+        // ข้อมูลอื่นๆ
     ];
 
     // คำนวณผลรวมแยกตามประเภทสำหรับวันที่เลือก
@@ -38,11 +24,20 @@ function LatestOrders({ selectedDate, selectedType }) {
     const totalExpense = totalByType("รายจ่าย");
     const totalSaving = totalByType("เงินเก็บ");
 
+    // ส่งค่ากลับไปยัง Overview
+    React.useEffect(() => {
+        onOrdersUpdate([
+            { type: "รายรับ", amount: totalIncome },
+            { type: "รายจ่าย", amount: totalExpense },
+            { type: "เงินเก็บ", amount: totalSaving },
+        ]);
+    }, [selectedDate, selectedType]);
+
     return (
-        <div style={{ background: '#f4f6f8', borderRadius: '10px', padding: '20px', textAlign: 'center' }}>
-            <h4 style={{ marginBottom: '20px' }}>สรุปยอดเงินสำหรับวันที่ {selectedDate || "..."}</h4>
+        <div style={{ background: '#f4f6f8', borderRadius: '10px', padding: '20px' }}>
+            <h4 style={{ marginBottom: '20px', textAlign: 'center' }}>สรุปยอดเงินสำหรับวันที่ {selectedDate || "..."}</h4>
             {filteredProducts.length > 0 ? (
-                <div style={{ fontSize: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div>
                     {selectedType === "รวม" ? (
                         <>
                             <p>รับทั้งหมด: <span style={{ color: 'green' }}>฿{totalIncome.toLocaleString()}</span></p>
@@ -50,7 +45,7 @@ function LatestOrders({ selectedDate, selectedType }) {
                             <p>เก็บทั้งหมด: <span style={{ color: 'orange' }}>฿{totalSaving.toLocaleString()}</span></p>
                         </>
                     ) : (
-                        <p style={{ fontSize: '1.5rem' }}>
+                        <p>
                             {selectedType === "รายรับ" && (
                                 <span style={{ color: 'green' }}>รับทั้งหมด: ฿{totalIncome.toLocaleString()}</span>
                             )}
@@ -64,7 +59,7 @@ function LatestOrders({ selectedDate, selectedType }) {
                     )}
                 </div>
             ) : (
-                <p style={{ textAlign: 'center', color: '#888', marginTop: '20px' }}>ไม่มีรายการสำหรับวันที่เลือก</p>
+                <p style={{ textAlign: 'center', color: '#888' }}>ไม่มีรายการสำหรับวันที่เลือก</p>
             )}
         </div>
     );
