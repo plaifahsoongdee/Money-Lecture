@@ -1,12 +1,12 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%; /* Use full width */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem; /* Reduced padding for mobile */
   text-align: center;
 }
 
 .card {
-  padding: 2em;
+  padding: 1em; /* Compact card padding */
 }
 
 .read-the-docs {
@@ -21,14 +21,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0.5rem 1rem; /* Compact padding */
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-  z-index: 1000; /* เพื่อให้แถบอยู่บนสุด */
+  z-index: 1000; /* Keep navbar on top */
 }
 
 .main-content {
-  margin-top: 80px; /* กำหนดตามความสูงของแถบด้านบน */
+  margin-top: 60px; /* Adjust for navbar height */
 }
 
 .header {
@@ -39,20 +39,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0.5rem 1rem; /* Compact padding */
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-  z-index: 1000; /* ทำให้แถบอยู่บนสุด */
+  z-index: 1000; /* Keep header on top */
 }
 
-/* ใช้ไฮไลท์เฉพาะวันที่ที่มีการบันทึกข้อมูล */
-/* CSS สำหรับการไฮไลต์วันที่ที่มีรายการบันทึก */
-/* สไตล์สำหรับปฏิทิน */
+/* Styles for the calendar */
 .custom-calendar {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
+  margin: 1rem auto; /* Center with margin */
 }
 
 .custom-calendar header {
@@ -63,12 +59,13 @@
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for mobile */
   gap: 5px;
 }
 
-.calendar-day-header, .calendar-day {
-  padding: 10px;
+.calendar-day-header,
+.calendar-day {
+  padding: 8px; /* Smaller padding */
   border-radius: 5px;
   text-align: center;
 }
@@ -110,7 +107,91 @@
   background: white;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 90%; /* Full width for mobile */
+  max-width: 400px;
   text-align: center;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem; /* Reduce padding */
+  }
+
+  .navbar,
+  .header {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align to the start */
+  }
+
+  .navbar {
+    padding: 0.5rem; /* Adjust padding */
+  }
+
+  .main-content {
+    margin-top: 60px; /* Adjust for smaller navbar */
+  }
+
+  .card {
+    padding: 1em; /* Compact card padding */
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(3, 1fr); /* Adjust columns for smaller screens */
+  }
+
+  .calendar-day-header,
+  .calendar-day {
+    font-size: 0.9rem; /* Smaller text on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar,
+  .header {
+    padding: 0.5rem; /* Compact even further for very small screens */
+  }
+
+  .card {
+    padding: 0.8em; /* Further reduce card padding */
+  }
+
+  .calendar-day-header,
+  .calendar-day {
+    font-size: 0.8rem; /* Smaller text for very small screens */
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5; /* Main background color */
+}
+
+.sidebar {
+  width: 100%; /* Ensure full width */
+  background-color: #FF69B4; /* Sidebar color */
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  width: 100%; /* Ensure full width */
+  background-color: #ffffff; /* Header background */
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+  z-index: 1000;
+  position: fixed; /* Keep it fixed */
+  top: 0;
+  left: 0;
+}
+
+.main-content {
+  margin-top: 80px; /* Space for the fixed header */
+  padding: 1rem;
+}
+
+.card {
+  width: 100%; /* Make cards take full width */
+  margin-bottom: 1rem; /* Space between cards */
+}
