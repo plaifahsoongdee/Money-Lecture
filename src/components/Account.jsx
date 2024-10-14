@@ -35,6 +35,7 @@ const Account = () => {
   };
 
   return (
+    <div style={{ display: "flex", width: "500vw", minHeight: "500vh", backgroundColor: "#f5f5f5" }}>
     <div className="account-container">
       <div className="sidebar">
         <Sidebar />
@@ -142,7 +143,7 @@ const Account = () => {
           </Row>
         </Container>
       </div>
-    </div>
+    </div></div>
   );
 };
 
