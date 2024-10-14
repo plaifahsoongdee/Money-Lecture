@@ -58,7 +58,7 @@ function Overview() {
   ];
 
   return (
-    <div style={{ display: "flex", width: "500vw", minHeight: "500vh", backgroundColor: "#f5f5f5" }}>
+    <div style={{ display: "flex", width: "100vw", minHeight: "100vh", backgroundColor: "#f5f5f5" }}>
       <div style={{
         backgroundColor: "#F8E7EF", color: "#333", width: "240px", minHeight: "100vh", boxShadow: "2px 0px 5px rgba(0, 0, 0, 0.1)",
         padding: "1rem", position: "fixed", top: 0, left: 0,

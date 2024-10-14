@@ -24,11 +24,11 @@
   padding: 1rem;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-  z-index: 1000; /* To keep the navbar on top */
+  z-index: 1000; /* เพื่อให้แถบอยู่บนสุด */
 }
 
 .main-content {
-  margin-top: 80px; /* Adjust according to the height of the navbar */
+  margin-top: 80px; /* กำหนดตามความสูงของแถบด้านบน */
 }
 
 .header {
@@ -42,11 +42,12 @@
   padding: 1rem;
   background-color: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
-  z-index: 1000; /* To keep the header on top */
+  z-index: 1000; /* ทำให้แถบอยู่บนสุด */
 }
 
-/* Highlight specific dates with saved entries */
-/* Styles for the calendar */
+/* ใช้ไฮไลท์เฉพาะวันที่ที่มีการบันทึกข้อมูล */
+/* CSS สำหรับการไฮไลต์วันที่ที่มีรายการบันทึก */
+/* สไตล์สำหรับปฏิทิน */
 .custom-calendar {
   width: 100%;
   max-width: 600px;
@@ -109,39 +110,7 @@
   background: white;
   padding: 20px;
   border-radius: 8px;
-  width: 90%; /* Make modal responsive */
-  max-width: 400px;
+  width: 300px;
   text-align: center;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  #root {
-    padding: 1rem; /* Reduce padding on smaller screens */
-  }
-
-  .navbar, .header {
-    flex-direction: column; /* Stack items vertically */
-    align-items: flex-start; /* Align to the start */
-  }
-
-  .navbar {
-    padding: 0.5rem; /* Adjust padding */
-  }
-
-  .main-content {
-    margin-top: 60px; /* Adjust for the smaller navbar */
-  }
-
-  .card {
-    padding: 1.5em; /* Reduce padding */
-  }
-  
-  .calendar-grid {
-    grid-template-columns: repeat(4, 1fr); /* Reduce columns in grid */
-  }
-
-  .calendar-day-header, .calendar-day {
-    font-size: 0.9rem; /* Smaller text on mobile */
-  }
-}
