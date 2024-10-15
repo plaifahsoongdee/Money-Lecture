@@ -5,11 +5,22 @@ const COLORS = {
   "รายรับ": 'green',
   "รายจ่าย": 'red',
   "เงินเก็บ": 'orange',
-  "No Data": '#CCCCCC' // สีเทาสำหรับกรณีไม่มีข้อมูล
+  "No Data": '#CCCCCC'
 };
 
+function CustomTooltip({ active, payload }) {
+  if (active && payload && payload.length) {
+    const { name, type, status, time, value } = payload[0].payload;
+    return (
+      <div style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+        <p>ยอดเงิน: ฿{value}</p>
+      </div>
+    );
+  }
+  return null;
+}
+
 function TrafficSourceChart({ data }) {
-  // ถ้าไม่มีข้อมูล ให้ใช้ข้อมูลเริ่มต้นที่เป็นสีเทา
   const hasData = data && data.some(item => item.amount !== 0);
   const chartData = hasData 
     ? data.map(item => ({
@@ -18,7 +29,6 @@ function TrafficSourceChart({ data }) {
       })) 
     : [{ name: "No Data", value: 1 }];
 
-  // กำหนด Legend ให้แสดงเพียงค่าเดียวในแต่ละประเภท
   const uniqueLegend = hasData ? [
     { value: "รายรับ", type: "square", color: COLORS["รายรับ"] },
     { value: "รายจ่าย", type: "square", color: COLORS["รายจ่าย"] },
@@ -42,7 +52,7 @@ function TrafficSourceChart({ data }) {
             <Cell key={`cell-${index}`} fill={COLORS[entry.name]} />
           ))}
         </Pie>
-        <Tooltip />
+        <Tooltip content={<CustomTooltip />} />
         <Legend payload={uniqueLegend} />
       </PieChart>
     </div>

@@ -8,6 +8,18 @@ const COLORS = {
   "No Data": '#CCCCCC'
 };
 
+function CustomTooltip({ active, payload }) {
+  if (active && payload && payload.length) {
+    const { name, type, status, time, sales } = payload[0].payload;
+    return (
+      <div style={{ backgroundColor: '#fff', padding: '10px', border: '1px solid #ccc' }}>
+        <p>ยอดเงิน: ฿{sales}</p>
+      </div>
+    );
+  }
+  return null;
+}
+
 function SalesBarChart({ data }) {
   const hasData = data && data.length > 0 && data.some(item => item.sales !== 0);
 
@@ -23,7 +35,7 @@ function SalesBarChart({ data }) {
         <BarChart width={500} height={300} data={hasData ? data : [{ name: "No Data", sales: 0 }]}>
           <XAxis dataKey="name" />
           <YAxis tickFormatter={(value) => `฿${value}`} />
-          <Tooltip formatter={(value) => `฿${value}`} />
+          <Tooltip content={<CustomTooltip />} />
           <Legend payload={uniqueLegend} />
           <Bar dataKey="sales">
             {data.map((entry, index) => (

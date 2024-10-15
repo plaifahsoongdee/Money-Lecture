@@ -58,7 +58,7 @@ function DashboardLayout() {
     setIsEditMode(true);
     setCurrentEntry(entry);
     setSource(entry.source);
-    setAmount(Math.abs(entry.amount)); // Remove the sign for editing
+    setAmount(Math.abs(entry.amount));
     setDate(entry.date);
     setTime(entry.time);
     setShowModal(true);
@@ -84,7 +84,6 @@ function DashboardLayout() {
       const updatedList = { ...prevEntries };
       const entryType = currentEntry.type;
 
-      // Replace the current entry with the updated one
       updatedList[entryType] = updatedList[entryType].map((entry) =>
         entry === currentEntry ? updatedEntry : entry
       );
@@ -97,7 +96,7 @@ function DashboardLayout() {
 
   const handleDeleteEntry = (entryToDelete) => {
     const entryType = entryToDelete.type;
-    
+
     setEntries((prevEntries) => ({
       ...prevEntries,
       [entryType]: prevEntries[entryType].filter(entry => entry !== entryToDelete),
@@ -139,7 +138,6 @@ function DashboardLayout() {
           <OverviewCard title="ยอดเงินเก็บ" value={`฿${Math.abs(calculateTotal("ยอดเงินเก็บ"))}`} entries={entries["ยอดเงินเก็บ"]} onClick={() => setSelectedTab("ยอดเงินเก็บ")} />
           <OverviewCard title="ยอดคงเหลือ" value={`฿${Math.abs(balance)}`} entries={[]} />
           <OverviewCard title="ยอดเงินรวม" value={`฿${Math.abs(calculateTotal("ยอดเงินเก็บ") + balance)}`} entries={[]} />
-
         </div>
 
         <Row className="mt-4">
@@ -190,12 +188,12 @@ function DashboardLayout() {
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="formSource" className="mt-3">
-                <Form.Label>ที่มา:</Form.Label>
+                <Form.Label>รายการ:</Form.Label>
                 <Form.Control
                   type="text"
                   value={source}
                   onChange={(e) => setSource(e.target.value)}
-                  placeholder="กรอกที่มาของรายรับ/รายจ่าย"
+                  placeholder="------------"
                 />
               </Form.Group>
               <Form.Group controlId="formAmount" className="mt-3">
@@ -239,7 +237,7 @@ function DashboardLayout() {
           </Modal.Footer>
         </Modal>
         
-        <Outlet /> {/* เพื่อแสดงเนื้อหาของเส้นทางย่อย */}
+        <Outlet />
       </div>
     </div>
   );

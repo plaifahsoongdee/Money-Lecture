@@ -4,13 +4,27 @@ function LatestOrders({ selectedDate, selectedType, onOrdersUpdate }) {
     const products = [
         { date: "2024-10-15", time: "6:00", status: "แม่ให้", type: "รายรับ", amount: 50 },
         { date: "2024-10-15", time: "6:30", status: "พ่อให้", type: "รายรับ", amount: 50 },
-        { date: "2024-10-17", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -30 },
+        { date: "2024-10-15", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -30 },
         { date: "2024-10-15", time: "9:00", status: "ซื้อขนม", type: "รายจ่าย", amount: -20 },
         { date: "2024-10-15", time: "10:00", status: "ออมเงินซื้อของเล่น", type: "เงินเก็บ", amount: 20 },
-        // ข้อมูลอื่นๆ
+
+        { date: "2024-10-17", time: "6:00", status: "แม่ให้", type: "รายรับ", amount: 50 },
+        { date: "2024-10-17", time: "6:30", status: "พ่อให้", type: "รายรับ", amount: 50 },
+        { date: "2024-10-17", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -30 },
+        { date: "2024-10-17", time: "9:00", status: "ซื้อขนม", type: "รายจ่าย", amount: -20 },
+        { date: "2024-10-17", time: "10:00", status: "ออมเงินซื้อของเล่น", type: "เงินเก็บ", amount: 500 },
+
+        { date: "2024-10-18", time: "6:00", status: "แม่ให้", type: "รายรับ", amount: 50 },
+        { date: "2024-10-18", time: "6:30", status: "พ่อให้", type: "รายรับ", amount: 50 },
+        { date: "2024-10-18", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -1000 },
+        { date: "2024-10-18", time: "9:00", status: "ซื้อขนม", type: "รายจ่าย", amount: -1000 },
+        { date: "2024-10-18", time: "10:00", status: "ออมเงินซื้อของเล่น", type: "เงินเก็บ", amount: 500 },
+
+        { date: "2024-09-1", time: "14:00", status: "ของเล่น", type: "รายจ่าย", amount: -1000 },
+        { date: "2023-10-1", time: "14:00", status: "ออม", type: "เงินเก็บ", amount: 500 },
     ];
 
-    // คำนวณผลรวมแยกตามประเภทสำหรับวันที่เลือก
+    
     const filteredProducts = products.filter(
         (product) => product.date === selectedDate
     );
@@ -24,7 +38,7 @@ function LatestOrders({ selectedDate, selectedType, onOrdersUpdate }) {
     const totalExpense = totalByType("รายจ่าย");
     const totalSaving = totalByType("เงินเก็บ");
 
-    // ส่งค่ากลับไปยัง Overview
+   
     React.useEffect(() => {
         onOrdersUpdate([
             { type: "รายรับ", amount: totalIncome },

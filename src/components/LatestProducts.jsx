@@ -20,6 +20,9 @@ function LatestProducts({ selectedDate, selectedType, onProductsUpdate }) {
         { date: "2024-10-18", time: "8:00", status: "ซื้อข้าวเช้า", type: "รายจ่าย", amount: -1000 },
         { date: "2024-10-18", time: "9:00", status: "ซื้อขนม", type: "รายจ่าย", amount: -1000 },
         { date: "2024-10-18", time: "10:00", status: "ออมเงินซื้อของเล่น", type: "เงินเก็บ", amount: 500 },
+
+        { date: "2024-09-1", time: "14:00", status: "Delivered", type: "รายจ่าย", amount: -1000 },
+        { date: "2023-10-1", time: "14:00", status: "Refunded", type: "เงินเก็บ", amount: 500 },
     ];
 
     const filteredProducts = products.filter(

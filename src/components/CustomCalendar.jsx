@@ -10,7 +10,7 @@ function CustomCalendar({ entries }) {
   }, [currentDate, entries]);
 
   const generateCalendarDays = () => {
-    const year = currentDate.getFullYear();
+    const year = currentDate.getFullYear(); 
     const month = currentDate.getMonth();
     const firstDayOfMonth = new Date(year, month, 1).getDay();
     const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
@@ -39,7 +39,6 @@ function CustomCalendar({ entries }) {
     const dateStr = formatDate(currentDate.getFullYear(), currentDate.getMonth(), day);
     const dayEntries = entries.filter(entry => entry.date === dateStr);
 
-    // คำนวณยอดรวมรายรับ รายจ่าย และยอดเงินเก็บแยกกัน
     const incomeTotal = dayEntries
       .filter(entry => entry.type === "รายรับ")
       .reduce((acc, entry) => acc + entry.amount, 0);
@@ -56,7 +55,7 @@ function CustomCalendar({ entries }) {
   };
 
   return (
-    <div className="custom-calendar">
+    <div className="custom-calendar"> 
       <header>
         <button onClick={handlePrevMonth}>{"<"}</button>
         <h3>{currentDate.toLocaleDateString('default', { month: 'long', year: 'numeric' })}</h3>
@@ -86,7 +85,7 @@ function CustomCalendar({ entries }) {
                     )}
                     {savingsTotal !== 0 && (
                       <div style={{ color: 'orange' }}>
-                        ฿{Math.abs(savingsTotal).toLocaleString()} {/* ยอดเงินเก็บ */}
+                        ฿{Math.abs(savingsTotal).toLocaleString()}
                       </div>
                     )}
                   </div>
